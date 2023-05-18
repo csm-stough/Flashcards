@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Spectre.Console" Version="0.46.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="Terminal.Gui" Version="1.10.1" />
   </ItemGroup>
 
   <ItemGroup>

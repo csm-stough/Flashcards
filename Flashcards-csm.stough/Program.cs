@@ -1,7 +1,9 @@
 ﻿using Flashcards_csm.stough;
 using Flashcards_csm.stough.DTOs;
+using Flashcards_csm.stough.Screens;
 using Microsoft.IdentityModel.Tokens;
 using Spectre.Console;
+using Terminal.Gui;
 using static ConsoleUtilities.PaginatedMenu;
 
 InitApplication();
@@ -11,8 +13,15 @@ void InitApplication()
 {
     Console.Title = $"Flashcards Application : Version {System.Configuration.ConfigurationManager.AppSettings.Get("ApplicationVersion")}";
     Database.Init();
+    Application.Init();
 }
 
+void MainMenu()
+{
+    ScreenManager.SetScreen(new MainMenuScreen());
+}
+
+/** OLD CODE
 void MainMenu()
 {
     AnsiConsole.Clear();
@@ -111,3 +120,4 @@ void StudySession(Stack stack)
 
     //perform report functionality
 }
+**/
