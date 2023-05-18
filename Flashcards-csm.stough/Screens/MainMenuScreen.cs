@@ -9,7 +9,7 @@ using Terminal.Gui;
 
 namespace Flashcards_csm.stough.Screens
 {
-    internal class MainMenuScreen : Screen
+    public class MainMenuScreen : Screen
     {
         public override void Init(params object[]? p)
         {

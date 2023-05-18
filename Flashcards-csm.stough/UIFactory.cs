@@ -3,6 +3,7 @@ using Flashcards_csm.stough.DTOs;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,49 +12,34 @@ namespace Flashcards_csm.stough
 {
     internal class UIFactory
     {
-        public static Panel CreateFlashcardDetailsPanel(Flashcard flashcard)
+        public static DataTable CreateFlashcardsDataTable(Stack stack)
         {
-            return new Panel(flashcard.Question + '\n' + flashcard.Answer);
-        }
+            DataTable table = new DataTable("Flashcards");
 
-        public static void BetterMenu(string Title, List<MenuOption> options)
-        {
-            SelectionPrompt<MenuOption> menu = new SelectionPrompt<MenuOption>()
-            {
-                Title = Title,
-                Converter = new Func<MenuOption, string>(option => option.Text),
-                WrapAround = true,
-            };
+/*            DataColumn idColumn = new DataColumn("id", typeof(int));
+            idColumn.Unique = true;*/
 
-            options.ForEach(option => { menu.AddChoice(option); });
+            DataColumn questionColumn = new DataColumn("Question", typeof(string));
 
-            AnsiConsole.Prompt(menu).action();
-        }
+            DataColumn answerColumn = new DataColumn("Answer", typeof(string));
 
-        public static void YesNo(string prompt, Action yes, Action no)
-        {
-            BetterMenu(prompt, new List<MenuOption>()
-            {
-                new MenuOption("Yes", yes),
-                new MenuOption("No", no)
-            });
-        }
+            //table.Columns.Add(idColumn);
+            table.Columns.Add(questionColumn);
+            table.Columns.Add(answerColumn);
 
-        public static Table GetFlashcardsTable(Stack stack)
-        {
             List<Flashcard> flashcards = FlashcardsAccessor.Get(stack);
-            Table flashcardsTable = new Table();
 
-            flashcardsTable.AddColumn(new TableColumn("Question").Centered());
-            flashcardsTable.AddColumn(new TableColumn("Answer").Centered());
+            DataSet flashcardsData = new DataSet("flashcards");
+
             flashcards.ForEach(flashcard =>
             {
-                flashcardsTable.AddRow(new string[] { flashcard.Question, flashcard.Answer });
+                DataRow row = table.NewRow();
+                row["Question"] = flashcard.Question;
+                row["Answer"] = flashcard.Answer;
+                table.Rows.Add(row);
             });
 
-            flashcardsTable.Centered();
-
-            return flashcardsTable;
+            return table;
         }
     }
 }

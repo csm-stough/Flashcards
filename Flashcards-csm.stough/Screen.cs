@@ -7,7 +7,7 @@ using Terminal.Gui;
 
 namespace Flashcards_csm.stough
 {
-    internal class Screen
+    public class Screen
     {
         public virtual void Init(params object[]? p)
         {
